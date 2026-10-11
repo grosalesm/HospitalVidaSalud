@@ -6,8 +6,8 @@ spring:
     name: auditoria-service
 
   r2dbc:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
+    url: ${DB_URL:r2dbc:postgresql://localhost:5432/auditoria_db}
+    username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD}
     pool:
       enabled: true
