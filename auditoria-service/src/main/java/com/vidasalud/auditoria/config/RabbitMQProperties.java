@@ -1,0 +1,12 @@
+package com.vidasalud.auditoria.config;
+
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+@Data
+@ConfigurationProperties(prefix = "app.rabbitmq")
+public class RabbitMQProperties {
+    private String exchange;
+    private String queueAuditoria;
+    private String routingKeyCitaConfirmada;
+}
