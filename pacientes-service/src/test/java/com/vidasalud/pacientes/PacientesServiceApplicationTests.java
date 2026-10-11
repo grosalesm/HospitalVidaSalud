@@ -1,10 +1,10 @@
-package com.vidasalud.gateway;
+package com.vidasalud.pacientes;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApiGatewayApplicationTests {
+class PacientesServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
