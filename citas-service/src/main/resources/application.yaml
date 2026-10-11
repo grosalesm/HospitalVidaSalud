@@ -1,0 +1,42 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: citas-service
+
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/citas_db
+    username: postgres
+    password: 5416889
+    pool:
+      enabled: true
+      initial-size: 5
+      max-size: 10
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+app:
+  rabbitmq:
+    exchange: hospital.eventos
+    queue-notificaciones: notificaciones.cita-confirmada
+    queue-auditoria: auditoria.cita-confirmada
+    routing-key-cita-confirmada: cita.confirmada
+    routing-key-cita-cancelada: cita.cancelada
+    routing-key-cita-reprogramada: cita.reprogramada
+
+webclient:
+  pacientes:
+    base-url: http://pacientes-service
+    timeout: 5000

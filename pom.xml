@@ -16,8 +16,8 @@
         <module>eureka-server</module>
         <module>api-gateway</module>
         <module>pacientes-service</module>
-        <!-- <module>citas-service</module>
-        <module>notificaciones-service</module>
+        <module>citas-service</module>
+        <!-- <module>notificaciones-service</module>
         <module>auditoria-service</module> -->
   </modules>
 

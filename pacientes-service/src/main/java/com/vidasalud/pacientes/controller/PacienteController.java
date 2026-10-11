@@ -63,10 +63,4 @@ public class PacienteController {
                 .map(ResponseEntity::ok);
     }
 
-    @GetMapping("/debug/db")
-    public Mono<String> debugDb() {
-        return pacienteRepository.findAll()
-                .collectList()
-                .map(lista -> "BD conectada. Pacientes encontrados: " + lista.size());
-    }
 }
