@@ -15,6 +15,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.time.LocalDateTime;
 
@@ -81,7 +82,7 @@ public class CitaServiceImpl implements CitaService {
                     cita.setEstado("CONFIRMADA");
                     return citaRepository.save(cita);
                 })
-                .map(cita -> {
+                .flatMap(cita -> {
                     CitaConfirmadaEvent evento = new CitaConfirmadaEvent(
                             cita.getId(),
                             cita.getPacienteId(),
@@ -90,12 +91,12 @@ public class CitaServiceImpl implements CitaService {
                             cita.getEstado(),
                             LocalDateTime.now()
                     );
-                    rabbitTemplate.convertAndSend(
-                            rabbitMQProperties.getExchange(),
-                            rabbitMQProperties.getRoutingKeyCitaConfirmada(),
-                            evento
-                    );
-                    return citaMapper.toResponseDTO(cita);
+                    return Mono.fromRunnable(() -> rabbitTemplate.convertAndSend(
+                                    rabbitMQProperties.getExchange(),
+                                    rabbitMQProperties.getRoutingKeyCitaConfirmada(),
+                                    evento))
+                            .subscribeOn(Schedulers.boundedElastic())
+                            .thenReturn(citaMapper.toResponseDTO(cita));
                 });
     }
 

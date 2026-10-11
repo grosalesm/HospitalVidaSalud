@@ -78,6 +78,10 @@ public class PacienteServiceImpl implements PacienteService {
 
     @Override
     public Mono<PacienteResponseDTO> cambiarEstado(Long id, String nuevoEstado) {
+        if (!"ACTIVO".equals(nuevoEstado) && !"INACTIVO".equals(nuevoEstado)) {
+            return Mono.error(new IllegalArgumentException(
+                    "Estado inválido '" + nuevoEstado + "'. Valores permitidos: ACTIVO, INACTIVO"));
+        }
         return pacienteRepository.findById(id)
                 .switchIfEmpty(Mono.error(
                         new PacienteNotFoundException("Paciente no encontrado con id: " + id)))

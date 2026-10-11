@@ -6,9 +6,9 @@ spring:
     name: notificaciones-service
 
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/notificaciones_db
-    username: postgres
-    password: 5416889
+    url: ${DB_URL:r2dbc:postgresql://localhost:5432/notificaciones_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD}
     pool:
       enabled: true
       initial-size: 5
