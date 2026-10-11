@@ -1,0 +1,40 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: notificaciones-service
+
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/notificaciones_db
+    username: postgres
+    password: 5416889
+    pool:
+      enabled: true
+      initial-size: 5
+      max-size: 10
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+
+app:
+  rabbitmq:
+    exchange: hospital.eventos
+    queue-notificaciones: notificaciones.cita-confirmada
+    routing-key-cita-confirmada: cita.confirmada
+
+webclient:
+  pacientes:
+    base-url: http://pacientes-service
